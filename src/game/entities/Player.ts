@@ -2,6 +2,12 @@ import Phaser from 'phaser'
 import { ASSET_KEYS, PHYSICS, REGISTRY_KEYS, SOUND_KEYS } from '../constants'
 import { playSfx } from '../audio'
 
+interface TouchInputState {
+  left: boolean
+  right: boolean
+  jump: boolean
+}
+
 function ensureAnims(scene: Phaser.Scene): void {
   if (scene.anims.exists('nike-idle')) return
 
@@ -39,7 +45,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.play('nike-idle')
   }
 
-  update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, wasd: Record<'left' | 'right' | 'jump', Phaser.Input.Keyboard.Key>): void {
+  update(
+    cursors: Phaser.Types.Input.Keyboard.CursorKeys,
+    wasd: Record<'left' | 'right' | 'jump', Phaser.Input.Keyboard.Key>,
+    touchInput?: TouchInputState,
+  ): void {
     const body = this.body as Phaser.Physics.Arcade.Body
     const time = this.scene.time.now
 
@@ -49,9 +59,9 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.setAlpha(1)
     }
 
-    const movingLeft = cursors.left.isDown || wasd.left.isDown
-    const movingRight = cursors.right.isDown || wasd.right.isDown
-    const wantsJump = cursors.up.isDown || wasd.jump.isDown
+    const movingLeft = cursors.left.isDown || wasd.left.isDown || !!touchInput?.left
+    const movingRight = cursors.right.isDown || wasd.right.isDown || !!touchInput?.right
+    const wantsJump = cursors.up.isDown || wasd.jump.isDown || !!touchInput?.jump
 
     if (movingLeft) {
       body.setVelocityX(-PHYSICS.playerSpeed)

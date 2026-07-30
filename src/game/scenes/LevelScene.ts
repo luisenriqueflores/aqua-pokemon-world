@@ -22,6 +22,7 @@ export class LevelScene extends Phaser.Scene {
   private boss?: Boss
   private bgLayers: ParallaxLayer[] = []
   private transitioning = false
+  private touchInput = { left: false, right: false, jump: false }
 
   constructor() {
     super('LevelScene')
@@ -32,6 +33,7 @@ export class LevelScene extends Phaser.Scene {
     this.transitioning = false
     this.boss = undefined
     this.bgLayers = []
+    this.touchInput = { left: false, right: false, jump: false }
   }
 
   create(): void {
@@ -72,12 +74,24 @@ export class LevelScene extends Phaser.Scene {
 
     this.game.events.on(EVENTS.pikachuAttackRequest, this.onPikachuAttackRequest, this)
     this.game.events.on(EVENTS.heartChanged, this.onHeartChanged, this)
+    this.game.events.on(EVENTS.moveLeftDown, this.onMoveLeftDown, this)
+    this.game.events.on(EVENTS.moveLeftUp, this.onMoveLeftUp, this)
+    this.game.events.on(EVENTS.moveRightDown, this.onMoveRightDown, this)
+    this.game.events.on(EVENTS.moveRightUp, this.onMoveRightUp, this)
+    this.game.events.on(EVENTS.jumpDown, this.onJumpDown, this)
+    this.game.events.on(EVENTS.jumpUp, this.onJumpUp, this)
     if (this.scene.isActive('UIScene')) {
       this.scene.bringToTop('UIScene')
     }
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.game.events.off(EVENTS.pikachuAttackRequest, this.onPikachuAttackRequest, this)
       this.game.events.off(EVENTS.heartChanged, this.onHeartChanged, this)
+      this.game.events.off(EVENTS.moveLeftDown, this.onMoveLeftDown, this)
+      this.game.events.off(EVENTS.moveLeftUp, this.onMoveLeftUp, this)
+      this.game.events.off(EVENTS.moveRightDown, this.onMoveRightDown, this)
+      this.game.events.off(EVENTS.moveRightUp, this.onMoveRightUp, this)
+      this.game.events.off(EVENTS.jumpDown, this.onJumpDown, this)
+      this.game.events.off(EVENTS.jumpUp, this.onJumpUp, this)
     })
   }
 
@@ -85,7 +99,7 @@ export class LevelScene extends Phaser.Scene {
     for (const layer of this.bgLayers) {
       layer.sprite.tilePositionX = this.cameras.main.scrollX * layer.factor
     }
-    this.player.update(this.cursors, this.wasd)
+    this.player.update(this.cursors, this.wasd, this.touchInput)
     this.pikachu.update(this.player)
   }
 
@@ -271,5 +285,29 @@ export class LevelScene extends Phaser.Scene {
       this.transitioning = true
       this.scene.start('GameOverScene', { stageData: this.stageData })
     }
+  }
+
+  private onMoveLeftDown = (): void => {
+    this.touchInput.left = true
+  }
+
+  private onMoveLeftUp = (): void => {
+    this.touchInput.left = false
+  }
+
+  private onMoveRightDown = (): void => {
+    this.touchInput.right = true
+  }
+
+  private onMoveRightUp = (): void => {
+    this.touchInput.right = false
+  }
+
+  private onJumpDown = (): void => {
+    this.touchInput.jump = true
+  }
+
+  private onJumpUp = (): void => {
+    this.touchInput.jump = false
   }
 }

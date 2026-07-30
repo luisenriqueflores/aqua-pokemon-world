@@ -25,6 +25,7 @@ export const ASSET_KEYS = {
 } as const
 
 export const SOUND_KEYS = {
+  bgm: 'bgm-main',
   menuStart: 'sfx-menu-start',
   uiClick: 'sfx-ui-click',
   jump: 'sfx-jump',
@@ -62,6 +63,7 @@ export const ASSET_PATHS: Record<string, string> = {
 }
 
 export const SOUND_PATHS: Record<string, string> = {
+  [SOUND_KEYS.bgm]: `${BASE}/audio/bgsound.mp3`,
   [SOUND_KEYS.menuStart]: `${BASE}/audio/jingles_HIT00.ogg`,
   [SOUND_KEYS.uiClick]: `${BASE}/audio/jingles_PIZZI15.ogg`,
   [SOUND_KEYS.jump]: `${BASE}/audio/jumpover.ogg`,
@@ -104,6 +106,8 @@ export const REGISTRY_KEYS = {
   stageIndex: 'stageIndex',
   stageCoinsTotal: 'stageCoinsTotal',
   stageCoinsCollected: 'stageCoinsCollected',
+  bgmVolume: 'bgmVolume',
+  bgmMuted: 'bgmMuted',
 } as const
 
 export const EVENTS = {
@@ -112,6 +116,12 @@ export const EVENTS = {
   pikachuRecruited: 'pikachu-recruited',
   pikachuAttackRequest: 'pikachu-attack-request',
   stageProgress: 'stage-progress',
+  moveLeftDown: 'move-left-down',
+  moveLeftUp: 'move-left-up',
+  moveRightDown: 'move-right-down',
+  moveRightUp: 'move-right-up',
+  jumpDown: 'jump-down',
+  jumpUp: 'jump-up',
 } as const
 
 export const GAME_WIDTH = 960
