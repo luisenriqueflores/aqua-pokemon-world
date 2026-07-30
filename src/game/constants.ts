@@ -24,6 +24,21 @@ export const ASSET_KEYS = {
   waterMeter: 'ui-water-meter',
 } as const
 
+export const SOUND_KEYS = {
+  menuStart: 'sfx-menu-start',
+  uiClick: 'sfx-ui-click',
+  jump: 'sfx-jump',
+  coin: 'sfx-coin',
+  recruit: 'sfx-recruit',
+  pikachuShoot: 'sfx-pikachu-shoot',
+  enemyHit: 'sfx-enemy-hit',
+  bossHit: 'sfx-boss-hit',
+  playerHurt: 'sfx-player-hurt',
+  stageClear: 'sfx-stage-clear',
+  gameOver: 'sfx-game-over',
+  win: 'sfx-win',
+} as const
+
 export const ASSET_PATHS: Record<string, string> = {
   [ASSET_KEYS.nikeIdle]: `${BASE}/characters/nike_idle_sheet.png`,
   [ASSET_KEYS.nikeRun]: `${BASE}/characters/nike_run_sheet.png`,
@@ -44,6 +59,21 @@ export const ASSET_PATHS: Record<string, string> = {
   [ASSET_KEYS.pokeballButton]: `${BASE}/ui/ui_pokeball_button.png`,
   [ASSET_KEYS.hearts]: `${BASE}/ui/ui_health_hearts.png`,
   [ASSET_KEYS.waterMeter]: `${BASE}/ui/ui_water_meter.png`,
+}
+
+export const SOUND_PATHS: Record<string, string> = {
+  [SOUND_KEYS.menuStart]: `${BASE}/audio/jingles_HIT00.ogg`,
+  [SOUND_KEYS.uiClick]: `${BASE}/audio/jingles_PIZZI15.ogg`,
+  [SOUND_KEYS.jump]: `${BASE}/audio/jumpover.ogg`,
+  [SOUND_KEYS.coin]: `${BASE}/audio/handleCoins.ogg`,
+  [SOUND_KEYS.recruit]: `${BASE}/audio/jingles_HIT02.ogg`,
+  [SOUND_KEYS.pikachuShoot]: `${BASE}/audio/laserRetro_000.ogg`,
+  [SOUND_KEYS.enemyHit]: `${BASE}/audio/slime_001.ogg`,
+  [SOUND_KEYS.bossHit]: `${BASE}/audio/jingles_HIT14.ogg`,
+  [SOUND_KEYS.playerHurt]: `${BASE}/audio/jingles_HIT10.ogg`,
+  [SOUND_KEYS.stageClear]: `${BASE}/audio/jingles_HIT06.ogg`,
+  [SOUND_KEYS.gameOver]: `${BASE}/audio/jingles_HIT09.ogg`,
+  [SOUND_KEYS.win]: `${BASE}/audio/jingles_HIT15.ogg`,
 }
 
 // Frame sizes measured from the real PNG dimensions (see repo memory).

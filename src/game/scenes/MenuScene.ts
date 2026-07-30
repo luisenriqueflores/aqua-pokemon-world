@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
-import { ASSET_KEYS, GAME_HEIGHT, GAME_WIDTH } from '../constants'
+import { ASSET_KEYS, GAME_HEIGHT, GAME_WIDTH, SOUND_KEYS } from '../constants'
+import { playSfx } from '../audio'
 import { resetGameState } from '../state/GameState'
 import { getStageByIndex } from '../levels'
 
@@ -54,6 +55,7 @@ export class MenuScene extends Phaser.Scene {
     })
 
     const beginGame = () => {
+      playSfx(this, SOUND_KEYS.menuStart, { volume: 0.6 })
       resetGameState(this.registry)
       this.scene.start('LevelScene', getStageByIndex(0))
       this.scene.launch('UIScene')

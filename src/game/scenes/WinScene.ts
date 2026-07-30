@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
-import { ASSET_KEYS, GAME_HEIGHT, GAME_WIDTH, REGISTRY_KEYS } from '../constants'
+import { ASSET_KEYS, GAME_HEIGHT, GAME_WIDTH, REGISTRY_KEYS, SOUND_KEYS } from '../constants'
+import { playSfx } from '../audio'
 
 export class WinScene extends Phaser.Scene {
   constructor() {
@@ -9,6 +10,7 @@ export class WinScene extends Phaser.Scene {
   create(): void {
     this.scene.stop('UIScene')
     this.cameras.main.setBackgroundColor('#04263d')
+    playSfx(this, SOUND_KEYS.win, { volume: 0.75 })
 
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 80, ASSET_KEYS.goalGate).setScale(0.4).setAlpha(0.9)
 

@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
-import { ASSET_KEYS, PHYSICS, REGISTRY_KEYS } from '../constants'
+import { ASSET_KEYS, PHYSICS, REGISTRY_KEYS, SOUND_KEYS } from '../constants'
+import { playSfx } from '../audio'
 
 function ensureAnims(scene: Phaser.Scene): void {
   if (scene.anims.exists('nike-idle')) return
@@ -67,6 +68,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     const onGround = body.blocked.down || body.touching.down
     if (wantsJump && onGround) {
       body.setVelocityY(PHYSICS.playerJumpVelocity)
+      playSfx(this.scene, SOUND_KEYS.jump, { volume: 0.35 })
     }
 
     if (!onGround) {
@@ -89,6 +91,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     const hearts = Math.max(0, (registry.get(REGISTRY_KEYS.hearts) ?? 0) - 1)
     registry.set(REGISTRY_KEYS.hearts, hearts)
     game.events.emit('heart-changed', hearts)
+    playSfx(this.scene, SOUND_KEYS.playerHurt, { volume: 0.6 })
 
     this.invulnerable = true
     this.invulnerableUntil = this.scene.time.now + PHYSICS.playerInvulnerabilityMs

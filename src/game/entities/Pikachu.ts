@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
-import { ASSET_KEYS, PIKACHU } from '../constants'
+import { ASSET_KEYS, PIKACHU, SOUND_KEYS } from '../constants'
+import { playSfx } from '../audio'
 import type { Player } from './Player'
 import type { Enemy } from './Enemy'
 import type { Boss } from './Boss'
@@ -82,6 +83,7 @@ export class Pikachu extends Phaser.Physics.Arcade.Sprite {
     if (!this.canAttack()) return
 
     this.attackReadyAt = this.scene.time.now + PIKACHU.attackCooldownMs
+    playSfx(this.scene, SOUND_KEYS.pikachuShoot, { volume: 0.45 })
     this.play('pikachu-attack')
     this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
       if (this.recruited) this.play('pikachu-walk')

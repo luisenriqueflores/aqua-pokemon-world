@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { ASSET_KEYS, ASSET_PATHS, FRAME_SIZES, GAME_HEIGHT, GAME_WIDTH } from '../constants'
+import { ASSET_KEYS, ASSET_PATHS, FRAME_SIZES, GAME_HEIGHT, GAME_WIDTH, SOUND_PATHS } from '../constants'
 
 export class BootScene extends Phaser.Scene {
   constructor() {
@@ -50,6 +50,10 @@ export class BootScene extends Phaser.Scene {
     this.load.spritesheet(ASSET_KEYS.grassStone, ASSET_PATHS[ASSET_KEYS.grassStone], FRAME_SIZES.grassStone)
     this.load.spritesheet(ASSET_KEYS.coralSand, ASSET_PATHS[ASSET_KEYS.coralSand], FRAME_SIZES.coralSand)
     this.load.spritesheet(ASSET_KEYS.hearts, ASSET_PATHS[ASSET_KEYS.hearts], { frameWidth: 100, frameHeight: 106 })
+
+    for (const [key, path] of Object.entries(SOUND_PATHS)) {
+      this.load.audio(key, path)
+    }
   }
 
   create(): void {

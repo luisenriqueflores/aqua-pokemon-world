@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
-import { ENEMY_CONFIGS, type EnemyType } from '../constants'
+import { ENEMY_CONFIGS, SOUND_KEYS, type EnemyType } from '../constants'
+import { playSfx } from '../audio'
 
 function ensureAnim(scene: Phaser.Scene, type: EnemyType): void {
   const config = ENEMY_CONFIGS[type]
@@ -86,6 +87,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   takeHit(): void {
     if (this.dead) return
     this.dead = true
+    playSfx(this.scene, SOUND_KEYS.enemyHit, { volume: 0.5 })
 
     const body = this.body as Phaser.Physics.Arcade.Body
     body.setEnable(false)

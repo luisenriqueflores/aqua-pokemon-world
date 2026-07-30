@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
-import { ASSET_KEYS, EVENTS, GAME_HEIGHT, GAME_WIDTH, REGISTRY_KEYS, STARTING_HEARTS } from '../constants'
+import { ASSET_KEYS, EVENTS, GAME_HEIGHT, GAME_WIDTH, REGISTRY_KEYS, SOUND_KEYS, STARTING_HEARTS } from '../constants'
+import { playSfx } from '../audio'
 
 export class UIScene extends Phaser.Scene {
   private heartIcons: Phaser.GameObjects.Sprite[] = []
@@ -74,6 +75,7 @@ export class UIScene extends Phaser.Scene {
   }
 
   private requestPikachuAttack(): void {
+    playSfx(this, SOUND_KEYS.uiClick, { volume: 0.35 })
     this.game.events.emit(EVENTS.pikachuAttackRequest)
   }
 

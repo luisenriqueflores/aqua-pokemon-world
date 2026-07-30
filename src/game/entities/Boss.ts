@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
-import { ASSET_KEYS, BOSS } from '../constants'
+import { ASSET_KEYS, BOSS, SOUND_KEYS } from '../constants'
+import { playSfx } from '../audio'
 
 export class Boss extends Phaser.Physics.Arcade.Sprite {
   hp = BOSS.maxHp
@@ -43,6 +44,7 @@ export class Boss extends Phaser.Physics.Arcade.Sprite {
   takeHit(): void {
     if (this.defeated) return
     this.hp -= 1
+    playSfx(this.scene, SOUND_KEYS.bossHit, { volume: 0.65 })
     this.setTint(0xffffff)
     this.scene.cameras.main.shake(150, 0.01)
     this.scene.time.delayedCall(120, () => this.clearTint())

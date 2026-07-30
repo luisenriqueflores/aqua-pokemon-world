@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
-import { GAME_HEIGHT, GAME_WIDTH, REGISTRY_KEYS, STARTING_HEARTS } from '../constants'
+import { GAME_HEIGHT, GAME_WIDTH, REGISTRY_KEYS, SOUND_KEYS, STARTING_HEARTS } from '../constants'
 import type { StageData } from '../levels/types'
+import { playSfx } from '../audio'
 
 interface GameOverData {
   stageData: StageData
@@ -14,6 +15,7 @@ export class GameOverScene extends Phaser.Scene {
   create(data: GameOverData): void {
     this.scene.stop('UIScene')
     this.cameras.main.setBackgroundColor('#1a0505')
+    playSfx(this, SOUND_KEYS.gameOver, { volume: 0.75 })
 
     this.add
       .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 60, 'Game Over', { fontSize: '48px', color: '#ff5555' })

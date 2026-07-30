@@ -1,10 +1,11 @@
 import Phaser from 'phaser'
-import { ASSET_KEYS, ENEMY_CONFIGS, EVENTS, GAME_HEIGHT, GAME_WIDTH, GROUND_TOP_HEIGHT, PHYSICS, REGISTRY_KEYS } from '../constants'
+import { ASSET_KEYS, ENEMY_CONFIGS, EVENTS, GAME_HEIGHT, GAME_WIDTH, GROUND_TOP_HEIGHT, PHYSICS, REGISTRY_KEYS, SOUND_KEYS } from '../constants'
 import { Player } from '../entities/Player'
 import { Pikachu } from '../entities/Pikachu'
 import { Enemy } from '../entities/Enemy'
 import { Boss } from '../entities/Boss'
 import type { StageData } from '../levels/types'
+import { playSfx } from '../audio'
 
 interface ParallaxLayer {
   sprite: Phaser.GameObjects.TileSprite
@@ -151,6 +152,7 @@ export class LevelScene extends Phaser.Scene {
 
     this.physics.add.overlap(this.player, coinsGroup, (_player, coinObj) => {
       coinObj.destroy()
+      playSfx(this, SOUND_KEYS.coin, { volume: 0.45 })
       const coins = (this.registry.get(REGISTRY_KEYS.coins) ?? 0) + 1
       const collected = (this.registry.get(REGISTRY_KEYS.stageCoinsCollected) ?? 0) + 1
       const total = this.registry.get(REGISTRY_KEYS.stageCoinsTotal) ?? 1
@@ -170,6 +172,7 @@ export class LevelScene extends Phaser.Scene {
 
     this.physics.add.overlap(this.player, pokeball, () => {
       pokeball.destroy()
+      playSfx(this, SOUND_KEYS.recruit, { volume: 0.55 })
       this.registry.set(REGISTRY_KEYS.hasPikachu, true)
       this.pikachu.recruit(this.player.x - 40, this.player.y)
       this.game.events.emit(EVENTS.pikachuRecruited)
